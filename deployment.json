@@ -1,0 +1,270 @@
+{
+  "network": "mantle-testnet",
+  "chainId": 5003,
+  "deployer": "0x56C0feE52344A563B2ea1A524A2B5FF71E9b4f24",
+  "timestamp": "2026-01-01T12:32:40.744Z",
+  "contracts": {
+    "tokens": [
+      {
+        "name": "US Treasury 2Y Tokenized",
+        "symbol": "mUSTB2Y",
+        "type": "Bonds",
+        "address": "0x3AE279dDbd01C05C7FB694625E589107B514a51b",
+        "apy": 480,
+        "risk": 5,
+        "duration": 63072000,
+        "aum": 25000000,
+        "status": 0,
+        "yieldComponents": [
+          {
+            "name": "US Treasury Yield",
+            "value": 510,
+            "description": "2-year US Treasury note yield"
+          },
+          {
+            "name": "Management Fee",
+            "value": -20,
+            "description": "Annual management fee"
+          },
+          {
+            "name": "Platform Fee",
+            "value": -10,
+            "description": "Mantle RealFi platform fee"
+          }
+        ]
+      },
+      {
+        "name": "Investment Grade Corporate",
+        "symbol": "mIGCORP",
+        "type": "Bonds",
+        "address": "0xdC6bDc094386940036e15831780F99892a17FEBF",
+        "apy": 620,
+        "risk": 18,
+        "duration": 31536000,
+        "aum": 15000000,
+        "status": 0,
+        "yieldComponents": [
+          {
+            "name": "Corporate Bond Yield",
+            "value": 680,
+            "description": "Investment grade corporate bond yield"
+          },
+          {
+            "name": "Credit Spread",
+            "value": -30,
+            "description": "Credit risk premium"
+          },
+          {
+            "name": "Management Fee",
+            "value": -20,
+            "description": "Annual management fee"
+          },
+          {
+            "name": "Platform Fee",
+            "value": -10,
+            "description": "Platform fee"
+          }
+        ]
+      },
+      {
+        "name": "Manhattan Commercial Complex",
+        "symbol": "mMHTCOM",
+        "type": "RealEstate",
+        "address": "0x1a673b34D2762Ac2082802f2412e38Ede99c7603",
+        "apy": 820,
+        "risk": 25,
+        "duration": 31536000,
+        "aum": 12500000,
+        "status": 0,
+        "yieldComponents": [
+          {
+            "name": "Rental Income",
+            "value": 720,
+            "description": "Commercial property rental yield"
+          },
+          {
+            "name": "Capital Appreciation",
+            "value": 180,
+            "description": "Expected property value growth"
+          },
+          {
+            "name": "Property Management",
+            "value": -50,
+            "description": "Property management fee"
+          },
+          {
+            "name": "Platform Fee",
+            "value": -30,
+            "description": "Platform fee"
+          }
+        ]
+      },
+      {
+        "name": "Miami Waterfront Residences",
+        "symbol": "mMIAWFR",
+        "type": "RealEstate",
+        "address": "0x81ABa1F88991481a8BbEc7a6179a1e94530F8526",
+        "apy": 950,
+        "risk": 35,
+        "duration": 15552000,
+        "aum": 8200000,
+        "status": 0,
+        "yieldComponents": [
+          {
+            "name": "Rental Income",
+            "value": 850,
+            "description": "Luxury residential rental yield"
+          },
+          {
+            "name": "Capital Appreciation",
+            "value": 200,
+            "description": "Miami real estate appreciation"
+          },
+          {
+            "name": "Property Management",
+            "value": -60,
+            "description": "Property management fee"
+          },
+          {
+            "name": "Platform Fee",
+            "value": -40,
+            "description": "Platform fee"
+          }
+        ]
+      },
+      {
+        "name": "Music Royalties Fund",
+        "symbol": "mMUSICRF",
+        "type": "CashFlow",
+        "address": "0x1598D2E485E4efB48288e09f0178Fd5425e30a2e",
+        "apy": 750,
+        "risk": 30,
+        "duration": 31536000,
+        "aum": 6500000,
+        "status": 0,
+        "yieldComponents": [
+          {
+            "name": "Streaming Royalties",
+            "value": 600,
+            "description": "Music streaming platform royalties"
+          },
+          {
+            "name": "Sync Licensing",
+            "value": 220,
+            "description": "TV/Film sync licensing income"
+          },
+          {
+            "name": "Management Fee",
+            "value": -50,
+            "description": "Royalty management fee"
+          },
+          {
+            "name": "Platform Fee",
+            "value": -20,
+            "description": "Platform fee"
+          }
+        ]
+      },
+      {
+        "name": "SaaS Revenue Pool",
+        "symbol": "mSAASRP",
+        "type": "CashFlow",
+        "address": "0x171F5a9630ee860420F6E1C0767d92a996c755df",
+        "apy": 1280,
+        "risk": 55,
+        "duration": 15552000,
+        "aum": 3800000,
+        "status": 0,
+        "yieldComponents": [
+          {
+            "name": "Subscription Revenue",
+            "value": 1400,
+            "description": "SaaS subscription income"
+          },
+          {
+            "name": "Churn Reserve",
+            "value": -60,
+            "description": "Customer churn provision"
+          },
+          {
+            "name": "Management Fee",
+            "value": -40,
+            "description": "Fund management fee"
+          },
+          {
+            "name": "Platform Fee",
+            "value": -20,
+            "description": "Platform fee"
+          }
+        ]
+      },
+      {
+        "name": "Supply Chain Factoring",
+        "symbol": "mSCFACT",
+        "type": "Invoices",
+        "address": "0x8e7bcD2e47d381DAc2bd82e346DBF50DFb93f4ba",
+        "apy": 1150,
+        "risk": 45,
+        "duration": 7776000,
+        "aum": 5500000,
+        "status": 0,
+        "yieldComponents": [
+          {
+            "name": "Factoring Income",
+            "value": 1250,
+            "description": "Invoice factoring discount yield"
+          },
+          {
+            "name": "Default Reserve",
+            "value": -50,
+            "description": "Bad debt provision"
+          },
+          {
+            "name": "Management Fee",
+            "value": -35,
+            "description": "Credit management fee"
+          },
+          {
+            "name": "Platform Fee",
+            "value": -15,
+            "description": "Platform fee"
+          }
+        ]
+      },
+      {
+        "name": "Trade Finance Pool",
+        "symbol": "mTRDFIN",
+        "type": "Invoices",
+        "address": "0xd274680b8DeFD99068D698afbe22Ed87F738ad54",
+        "apy": 1020,
+        "risk": 40,
+        "duration": 5184000,
+        "aum": 4200000,
+        "status": 0,
+        "yieldComponents": [
+          {
+            "name": "Trade Finance Yield",
+            "value": 1100,
+            "description": "International trade finance yield"
+          },
+          {
+            "name": "FX Hedging Cost",
+            "value": -30,
+            "description": "Currency hedging cost"
+          },
+          {
+            "name": "Default Reserve",
+            "value": -30,
+            "description": "Default provision"
+          },
+          {
+            "name": "Platform Fee",
+            "value": -20,
+            "description": "Platform fee"
+          }
+        ]
+      }
+    ],
+    "yieldDistributor": "0x15861980cf5868b713D11bBB65256afEcA938802"
+  }
+}

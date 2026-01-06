@@ -1,0 +1,219 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Enums
+enum AssetType {
+  fixed_income   @map("fixed-income")
+  real_estate    @map("real-estate")
+  private_credit @map("private-credit")
+  alternatives
+}
+
+enum AssetStatus {
+  Active
+  Maturing
+  Paused
+}
+
+enum AssetEventType {
+  Deposit
+  Withdraw
+  Payout
+}
+
+// Models
+model User {
+  id        String   @id @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  portfolio Portfolio?
+  holdings  PortfolioHolding[]
+
+  @@map("users")
+}
+
+model Asset {
+  id                   String      @id
+  name                 String
+  type                 AssetType
+  apy                  Decimal     @db.Decimal(6, 2)
+  durationDays         Int         @map("duration_days")
+  riskScore            Int         @map("risk_score")
+  yieldConfidence      Int         @map("yield_confidence")
+  aumUsd               Decimal     @map("aum_usd") @db.Decimal(18, 2)
+  price                Decimal     @db.Decimal(18, 2)
+  status               AssetStatus
+  nextPayoutDate       DateTime    @map("next_payout_date") @db.Date
+  description          String?
+  tokenAddress         String?     @map("token_address")
+  distributorAddress   String?     @map("distributor_address")
+  createdAt            DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  yieldBreakdowns      AssetYieldBreakdown[]
+  confidenceFactors    AssetConfidenceFactor[]
+  realWorldInfo        AssetRealWorldInfo?
+  realWorldKeyFacts    AssetRealWorldKeyFact[]
+  realWorldVerifications AssetRealWorldVerification[]
+  cashFlowSources      AssetCashFlowSource[]
+  events               AssetEvent[]
+  yieldHistory         AssetYieldHistory[]
+  navHistory           AssetNavHistory[]
+  holdings             PortfolioHolding[]
+
+  @@index([type], map: "assets_type_idx")
+  @@index([status], map: "assets_status_idx")
+  @@index([apy], map: "assets_apy_idx")
+  @@index([riskScore], map: "assets_risk_idx")
+  @@map("assets")
+}
+
+model AssetYieldBreakdown {
+  id          BigInt  @id @default(autoincrement())
+  assetId     String  @map("asset_id")
+  label       String
+  percentage  Decimal @db.Decimal(5, 2)
+  description String?
+  impact      String  // positive, negative, neutral
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId], map: "asset_yield_breakdowns_asset_idx")
+  @@map("asset_yield_breakdowns")
+}
+
+model AssetConfidenceFactor {
+  id          BigInt  @id @default(autoincrement())
+  assetId     String  @map("asset_id")
+  label       String
+  score       Int
+  description String?
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId], map: "asset_confidence_factors_asset_idx")
+  @@map("asset_confidence_factors")
+}
+
+model AssetRealWorldInfo {
+  assetId String  @id @map("asset_id")
+  title   String
+  summary String?
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@map("asset_real_world_info")
+}
+
+model AssetRealWorldKeyFact {
+  id      BigInt @id @default(autoincrement())
+  assetId String @map("asset_id")
+  label   String
+  value   String
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId], map: "asset_real_world_key_facts_asset_idx")
+  @@map("asset_real_world_key_facts")
+}
+
+model AssetRealWorldVerification {
+  id      BigInt @id @default(autoincrement())
+  assetId String @map("asset_id")
+  item    String
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId], map: "asset_real_world_verifications_asset_idx")
+  @@map("asset_real_world_verifications")
+}
+
+model AssetCashFlowSource {
+  id          BigInt  @id @default(autoincrement())
+  assetId     String  @map("asset_id")
+  source      String
+  frequency   String
+  description String?
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId], map: "asset_cash_flow_sources_asset_idx")
+  @@map("asset_cash_flow_sources")
+}
+
+model AssetEvent {
+  id        BigInt         @id @default(autoincrement())
+  assetId   String         @map("asset_id")
+  type      AssetEventType
+  amount    Decimal        @db.Decimal(18, 2)
+  eventDate DateTime       @map("event_date") @db.Date
+  txHash    String?        @map("tx_hash")
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId], map: "asset_events_asset_idx")
+  @@index([eventDate], map: "asset_events_date_idx")
+  @@map("asset_events")
+}
+
+model AssetYieldHistory {
+  id         BigInt  @id @default(autoincrement())
+  assetId    String  @map("asset_id")
+  dayIndex   Int     @map("day_index")
+  yieldValue Decimal @map("yield_value") @db.Decimal(10, 6)
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([assetId, dayIndex])
+  @@index([assetId], map: "asset_yield_history_asset_idx")
+  @@map("asset_yield_history")
+}
+
+model AssetNavHistory {
+  id       BigInt   @id @default(autoincrement())
+  assetId  String   @map("asset_id")
+  dayIndex Int      @map("day_index")
+  navValue Decimal  @map("nav_value") @db.Decimal(18, 4)
+
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([assetId, dayIndex])
+  @@index([assetId], map: "asset_nav_history_asset_idx")
+  @@map("asset_nav_history")
+}
+
+model Portfolio {
+  userId      String   @id @map("user_id") @db.Uuid
+  cashUsd     Decimal  @default(0) @map("cash_usd") @db.Decimal(18, 2)
+  lastUpdated DateTime @default(now()) @map("last_updated") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("portfolios")
+}
+
+model PortfolioHolding {
+  id        BigInt   @id @default(autoincrement())
+  userId    String   @map("user_id") @db.Uuid
+  assetId   String   @map("asset_id")
+  shares    Decimal  @default(0) @db.Decimal(18, 6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, assetId])
+  @@index([userId], map: "portfolio_holdings_user_idx")
+  @@index([assetId], map: "portfolio_holdings_asset_idx")
+  @@map("portfolio_holdings")
+}
+
